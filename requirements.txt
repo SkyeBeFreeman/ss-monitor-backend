@@ -1,0 +1,11 @@
+Click==7.0
+configparser==3.5.0
+Flask==1.0.2
+Flask-Cors==3.0.6
+Flask-Failsafe==0.2
+itsdangerous==0.24
+Jinja2==2.10
+MarkupSafe==1.0
+pymongo==3.7.2
+six==1.11.0
+Werkzeug==0.14.1
