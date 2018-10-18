@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+
 class Output(object):
 
     def __init__(self, port, count, time):
