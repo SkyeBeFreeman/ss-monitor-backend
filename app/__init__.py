@@ -4,10 +4,10 @@ from flask import Flask
 from flask_cors import CORS
 from configparser import ConfigParser
 from models.user import User
-from datetime import datetime
 from apscheduler.scheduler import Scheduler
 import json
 import pymongo
+
 
 class MyConfigParser(ConfigParser):
     def optionxform(self, optionstr):
@@ -22,7 +22,7 @@ cfg.read('config.ini')
 # print(cfg)
 for k, v in cfg.items('web'):
     if k == 'DEBUG':
-        if (v == 'True'):
+        if v == 'True':
             app.config[k] = True
         else:
             app.config[k] = False
@@ -45,8 +45,12 @@ with open(cfg.get('other', 'info_file_path'), "r") as load_f:
     for key in load_dict:
         user = User(load_dict[key], key)
         user_list.append(user)
-        print(user)
+        # print(user)
+
+sched = Scheduler()
+sched.start()
 
 import restful, service
-service.monitor.start_watching(user_list)
+service.monitor.start_watching()
+
 
