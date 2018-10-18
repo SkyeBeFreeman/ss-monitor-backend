@@ -3,9 +3,9 @@
 from flask import Flask
 from flask_cors import CORS
 from configparser import ConfigParser
+from models.user import User
 import json
 import pymongo
-
 
 class MyConfigParser(ConfigParser):
     def optionxform(self, optionstr):
@@ -41,13 +41,9 @@ user_list = []
 with open(cfg.get('other', 'infofilepath'), "r") as load_f:
     load_dict = json.load(load_f)['port_password']
     for key in load_dict:
-        user = {
-            'name': load_dict[key], 
-            'port': key            
-        }
+        user = User(load_dict[key], key)
         user_list.append(user)
-# print(user_list)
-
+        print(user)
 
 # api的业务逻辑
 from . import restful, service

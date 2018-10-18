@@ -10,4 +10,4 @@ class Output(object):
         self.time = time
 
     def __str__(self):
-        return "port:{} - count:{} - time:{}".format(self.port, self.count, self.time)
+        return "port:{0} - count:{1} - time:{2}".format(self.port, self.count, self.time)

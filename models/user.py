@@ -9,4 +9,4 @@ class User(object):
         self.port = port
 
     def __str__(self):
-        return "name:{} - port:{}".format(self.name, self.port)
+        return "name:{0} - port:{1}".format(self.name, self.port)
