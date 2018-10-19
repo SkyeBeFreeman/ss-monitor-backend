@@ -77,7 +77,7 @@ def return_form_data():
         for i in range(length - 1):
             temp.append([
                 long(user_data[user.port][i + 1].time),
-                (float(user_data[user.port][i + 1].count.encode('utf-8')) - float(user_data[user.port][i].count.encode('utf-8'))) / 1024.0
+                (float(user_data[user.port][i + 1].count.encode('utf-8')) - float(user_data[user.port][i].count.encode('utf-8'))) / (1024.0 * 60.0)
             ])
         data.append({
             "name": user.name,
