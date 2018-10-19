@@ -7,7 +7,7 @@ from models.output import Output
 import logging
 logging.basicConfig()
 
-USER_DATA_MAX_LENGTH = 24 * 60
+USER_DATA_MAX_LENGTH = 24 * 60 + 1
 # USER_DATA_MAX_LENGTH = 5
 
 
@@ -73,12 +73,15 @@ def return_form_data():
     data = []
     for user in user_list:
         temp = []
+        length = len(user_data[user.port])
+        for i in range(length - 1):
+            temp.append(int(user_data[user.port][i + 1].count.encode('utf-8')) - int(user_data[user.port][i].count.encode('utf-8')))
         for item in user_data[user.port]:
             temp.append(item.count)
         data.append({
             "name": user.name,
             "port": user.port,
-            "count": temp
+            "speed": temp
         })
     return data
 
