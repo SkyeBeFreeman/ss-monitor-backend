@@ -23,7 +23,7 @@ def stop_watching():
     return "stop_watching"
 
 
-@app.route('/api/delete_all', methods=['GET'])
+# @app.route('/api/delete_all', methods=['GET'])
 def delete_all():
     service.dao.delete_all()
     return "delete_all"
