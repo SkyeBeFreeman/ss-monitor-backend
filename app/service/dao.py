@@ -75,13 +75,14 @@ def return_form_data():
         temp = []
         length = len(user_data[user.port])
         for i in range(length - 1):
-            temp.append(int(user_data[user.port][i + 1].count.encode('utf-8')) - int(user_data[user.port][i].count.encode('utf-8')))
-        for item in user_data[user.port]:
-            temp.append(item.count)
+            temp.append([
+                int(user_data[user.port][i + 1].count.encode('utf-8')) - int(user_data[user.port][i].count.encode('utf-8')),
+                long(user_data[user.port][i + 1].time.encode('utf-8')
+            ])
         data.append({
             "name": user.name,
             "port": user.port,
-            "speed": temp
+            "content": temp
         })
     return data
 
