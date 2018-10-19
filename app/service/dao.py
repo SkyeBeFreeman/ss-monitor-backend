@@ -70,10 +70,15 @@ def print_user_data():
 
 
 def return_form_data():
-    data = {}
+    data = []
     for user in user_list:
-        data[user.port] = []
+        temp = []
         for item in user_data[user.port]:
-            data[user.port].append(item.count)
+            temp.append(item.count)
+        data.append({
+            "name": user.name,
+            "port": user.port,
+            "count": temp
+        })
     return data
 
