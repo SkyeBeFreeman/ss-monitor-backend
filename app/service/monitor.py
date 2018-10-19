@@ -1,9 +1,12 @@
+# encoding: utf-8
+
+
 import subprocess
 import time
 from models.output import Output
 from app import cfg, sched, user_list, db
-import logging
-logging.basicConfig()
+from pymongo import DESCENDING
+from dao import save
 
 
 def start_watching():
@@ -11,6 +14,7 @@ def start_watching():
         cfg.set('other', 'is_watching', '1')
         with open('config.ini', 'w+') as f:
             cfg.write(f)
+        db['output'].create_index([("time", DESCENDING)], background=True)
         for user in user_list:
             result = subprocess.Popen(['sudo iptables -A OUTPUT -p tcp --sport ' + user.port], stdout=subprocess.PIPE,
                                       shell=True).communicate()
@@ -19,7 +23,7 @@ def start_watching():
                 print "start_watching error: " + stderr
 
 
-@sched.interval_schedule(seconds=5)
+@sched.interval_schedule(minutes=1)
 def check_watching():
     if cfg.get('other', 'is_watching') == '1':
         result = subprocess.Popen(['sudo iptables -L -v -n -x'], stdout=subprocess.PIPE, shell=True).communicate()
@@ -33,11 +37,11 @@ def check_watching():
                 result = stdout.split("\n")[-length - 1:-1]
                 for i in range(length):
                     result[i] = Output(result[i].split()[-1].split(':')[1], result[i].split()[1], current_time)
-                    db['output'].insert(result[i].__dict__)
-                for item in result:
-                    print item
-            except:
-                print "Check_watching Error"
+                    save(result[i])
+                # for item in result:
+                #     print item
+            except Exception, e:
+                print str(e)
         else:
             print "check_watching error: " + stderr
 

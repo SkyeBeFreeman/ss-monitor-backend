@@ -1,8 +1,8 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-from app import app, db, service
-# from flask import Flask, jsonify, request, abort
-# from datetime import datetime
+# encoding: utf-8
+
+
+from app import app, service, user_data
+from flask import jsonify
 
 
 @app.route('/api/start_watching', methods=['GET'])
@@ -21,4 +21,15 @@ def check_watching():
 def stop_watching():
     service.monitor.stop_watching()
     return "stop_watching"
+
+
+@app.route('/api/delete_all', methods=['GET'])
+def delete_all():
+    service.dao.delete_all()
+    return "delete_all"
+
+
+@app.route('/api/data', methods=['GET'])
+def data():
+    return jsonify(service.dao.return_form_data())
 

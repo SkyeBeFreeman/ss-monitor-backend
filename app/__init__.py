@@ -1,5 +1,6 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+# encoding: utf-8
+
+
 from flask import Flask
 from flask_cors import CORS
 from configparser import ConfigParser
@@ -35,22 +36,24 @@ CORS(app)
 # MongoDB
 client = pymongo.MongoClient(host=cfg.get('db', 'hostname'), port=cfg.getint('db', 'port'))
 db = client[cfg.get('db', 'dbname')]
-# collection = db['user']
 
 # 数据初始化
 user_list = []
+user_data = {}
 
 with open(cfg.get('other', 'info_file_path'), "r") as load_f:
     load_dict = json.load(load_f)['port_password']
     for key in load_dict:
         user = User(load_dict[key], key)
         user_list.append(user)
+        user_data[user.port] = []
         # print(user)
 
 sched = Scheduler()
 sched.start()
 
 import restful, service
+service.dao.init_user_data()
 service.monitor.start_watching()
 
 

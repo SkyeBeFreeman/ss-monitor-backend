@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+# encoding: utf-8
 
 
 class User(object):
@@ -10,3 +9,4 @@ class User(object):
 
     def __str__(self):
         return "name:{0} - port:{1}".format(self.name, self.port)
+
